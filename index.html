@@ -7,7 +7,7 @@
         <title>Code-Quiz</title>
     </head>
 
-    <body>
+    <body class="container">
         <!-- header with the tilte and to view high score -->
         <header class="header">
             <div>
@@ -20,24 +20,25 @@
         
         <!-- explanation about the quiz and scoring instructions -->
         <div>
-            <h3>Try to answer the following code related questions within the time limit. 
+            <h3>Instructions: Try to answer the following code related questions within the time limit. 
             Keep in mind that every incorrect answers will penalize your scoretime by 10 seconds.</h3>
             <h3>Press "START" key to start the quiz. Good luck!</h3>
-            <hr>
         </div>    
         
         <button class="start-key">START the quiz</button>
 
         <!-- section where the quiz questions will be displayed - "USER INPUT"-->
-        <div class="question"></div>    
-        <hr>
-
+        <h3 class="question"></h3>    
+        
         <!-- section where the quiz answer (Right or Wrong) will be displayed - "OUTPUT"-->
-        <div class="answer-statement">Your answer is: <span class="answer"></span></div>
-        <hr>
+        <div class="answer-statement">
+            <h3>Your answer is: <span class="answer"></span></h3>
+            <hr>
+        </div>
+        
 
         <!-- body element with high scores displays -->
-        <button class="high-scores">View Highscores</button>
+        <button class="high-scores">Highscores</button>
 
         <!-- footer section -->
         <footer class="footer-copyright">
