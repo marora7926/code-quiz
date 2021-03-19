@@ -1,0 +1,65 @@
+header{
+    background-color: black;
+}
+
+.time-display{
+
+}
+
+.live-time-value{
+
+}
+
+.header h1{
+    font: 3em;
+    padding: 15px;
+    margin: 15px;
+    background-color: black;
+    color: coral;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+    from {
+    text-shadow: 0 0 10px white, 0 0 20px white, 0 0 30px rgb(241, 95, 41), 0 0 40px rgb(241, 95, 41), 0 0 50px rgb(241, 95, 41), 0 0 60px rgb(241, 95, 41), 0 0 70px rgb(241, 95, 41);
+    }
+    to {
+    text-shadow: 0 0 20px white, 0 0 30px white, 0 0 40px rgb(233, 153, 123), 0 0 50px rgb(233, 153, 123), 0 0 60px rgb(233, 153, 123), 0 0 70px rgb(233, 153, 123), 0 0 80px rgb(233, 153, 123);
+    }
+}
+    
+.h2{
+
+}
+
+h3{
+
+}
+
+hr{
+
+}
+
+.start-key{
+
+}
+
+.question{
+
+}
+
+.answer-statement{
+
+}
+
+.answer{
+
+}
+
+.high-scores{
+
+}
+
+.footer-copyright{
+
+}
