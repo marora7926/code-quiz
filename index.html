@@ -9,36 +9,34 @@
 
     <body>
         <!-- header with the tilte and to view high score -->
-        <!-- <header class="header">
+        <header class="header">
+            <!-- body element with high scores displays -->
+            <!-- body element with timer countdown displayed in real time -->
             <div>
-                <h1>Coding Quiz Challenge</h1>
+                <p class="timer-heading">Time Left: <span class="live-time-value"></span></p>
             </div>
-        </header> -->
+            
+            
+            <hr>           
+        </header>
 
-        <!-- body element with timer countdown displayed in real time -->
-        <!-- <h2 class="time-display">Time Left: <span class="live-time-value"></span></h2> -->
-        
-        <!-- explanation about the quiz and scoring instructions -->
-        <!-- <div>
-            <h3>Instructions: Try to answer the following code related questions within the time limit. 
-            Keep in mind that every incorrect answers will penalize your scoretime by 10 seconds.</h3>
-            <h3>Press "START" key to start the quiz. Good luck!</h3>
-        </div>    
-        
-        <button class="start-key">START</button>
-         -->
-        <!-- section where the quiz questions will be displayed - "USER INPUT"-->
-        <!-- <h3 class="screen"></h3> -->
-        
-        <!-- section where the quiz answer (Right or Wrong) will be displayed - "OUTPUT"-->
-        <!-- <div class="answer-statement">
-            <p>Your answer is: <span class="answer"></span></p>
-            <hr>
-        </div>
-         -->
+        <main>
 
-        <!-- body element with high scores displays -->
-        <button class="high-scores">Highscores</button>
+            <!-- section where the quiz questions will be displayed - "USER INPUT"-->
+            <div>
+                <h3 class="screenquestion"></h3>
+            </div>
+            
+            <!-- section where the quiz answer (Right or Wrong) will be displayed - "OUTPUT"-->
+            <div>
+                <p class="answer-statement"></p>
+                <hr>
+            </div>
+        </main>
+
+        <section>
+            <button class="high-scores">Highscores</button>
+        </section>
 
         <!-- footer section -->
         <footer class="footer-copyright">

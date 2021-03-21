@@ -297,20 +297,44 @@ function displayAllAnswered(){
     displayScreen.appendChild(allAnsweredButton);
 
     // event listerner on button click
-    allAnsweredButton.addEventListener("click", submitScore);
+    allAnsweredButton.addEventListener("click", submitScores);
 }
 
+// after submit the score, this will save the score to local storage
 
+var saveUserInput = {
+    userScore: 0,
+    userInitials: ""
+}
 
+var saveDatabase = [];
+
+// function to extract a user score and save them to localStorage 
+funtion submitScores() {
     
+    //this will load scores from local storage to user database
+    loadUserScores()
+    
+    //add the score of a user to saveUserInput data variable 
+    saveUserInput.userScore = score;
+    
+    // add initial of a user to saveUserInput data variable
+    saveUserInput.userInitials = document.getElementById(allAnsweredInput).nodeValue;
+    
+    //add subsequent score and intial to user database
+    saveDatabase.push(saveUserInput);
 
+    // save data from saveUserInput to local storage using JSON
+    localStorage.setItem("saves", JSON.stringify(saveDatabase));
+}
 
-
-
+// save score and initials from localstorage to saveDatabase
+function loadUserScores() {
+    if (localStorage.length !== 0) {
+        saveArray = JSON.parse(localStorage.getItem("saves"));
+    } else {
+        saveDatabase = [];
     }
-       
-    
-    
-
+}
 
 // Reference website: https://www.freecodecamp.org/news/multiple-choice-quiz-template/

@@ -6,23 +6,22 @@ body {
   }
 
 header{
-    padding: 20px;
-    background-color: black;
+    background-color: rgb(241, 230, 134);
 }
 
-.time-display{
+.timer-heading{
     color: black;
-    font-size: 30px;
+    font-size: 35px;
     text-align: center;
     animation: glow 1s ease-in-out infinite alternate;
 }
 
 @-webkit-keyframes glow {
     from {
-    text-shadow: 0 0 10px white, 0 0 20px red, 0 0 30px red, 0 0 40px red, 0 0 50px red;
+    text-shadow: 0 0 10px white, 0 0 20px rgb(206, 6, 6), 0 0 30px rgb(206, 6, 6), 0 0 40px rgb(206, 6, 6), 0 0 50px rgb(206, 6, 6);
     }
     to {
-    text-shadow: 0 0 20px white, 0 0 30px white, 0 0 40px red, 0 0 50px red;
+    text-shadow: 0 0 20px white, 0 0 30px white, 0 0 40px rgb(206, 6, 6)d, 0 0 50px rgb(206, 6, 6);
     }
 }
 
@@ -32,18 +31,11 @@ header{
 
 @-webkit-keyframes glow {
     from {
-    text-shadow: 0 0 10px white, 0 0 20px red, 0 0 30px red, 0 0 40px red, 0 0 50px red;
+    text-shadow: 0 0 10px white, 0 0 20px rgb(206, 6, 6), 0 0 30px rgb(206, 6, 6), 0 0 40px rgb(206, 6, 6), 0 0 50px rgb(206, 6, 6);
     }
     to {
-    text-shadow: 0 0 20px white, 0 0 30px white, 0 0 40px red, 0 0 50px red;
+    text-shadow: 0 0 20px white, 0 0 30px white, 0 0 40px rgb(206, 6, 6), 0 0 50px rgb(206, 6, 6);
     }
-}
-
-.header h1{
-    text-align: center;
-    padding: 5px;
-    margin: 5px;
-    color: coral;
 }
     
 hr{
@@ -53,7 +45,7 @@ hr{
     background-color:coral;
 }
 
-.start-key{
+/* .start-key{
     background-color: Green;
     border-radius: 15px;
     color: white;
@@ -62,24 +54,10 @@ hr{
     text-decoration: none;
     font-size: 20px;
     width: 15%;
-}
-
-.empty-box{
-    display: flex:
-    margin-top: 2%;
-}
-
-.question{
-
-}
-
-.answer-statement p{
-    font-size: 25px;
-    text-decoration: double;
-}
+} */
 
 .high-scores{
-    background-color: orange;
+    background-color: rgb(235, 185, 92);
     border-radius: 15px;
     color: black;
     padding: 10px 15px;
@@ -87,7 +65,7 @@ hr{
     text-align: center;
     text-decoration: none;
     font-size: 20px;
-    width: 15%;
+    width: 12%;
 }
 
 .footer-copyright{
