@@ -45,16 +45,35 @@ hr{
     background-color:coral;
 }
 
-/* .start-key{
-    background-color: Green;
+.startkey{
+    background-color: rgb(98, 206, 98);
     border-radius: 15px;
-    color: white;
-    padding: 10px 15px;
+    color: black;
+    padding: 20px 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     text-align: center;
     text-decoration: none;
     font-size: 20px;
     width: 15%;
-} */
+}
+
+.question {
+    font-size: 25px;
+}
+
+.questionUl {
+    list-style-type: disc;
+}
+
+.answerOptionsButton {
+    background-color: blanchedalmond;
+    font-size: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 30%;
+    text-align: left;
+}
 
 .high-scores{
     background-color: rgb(235, 185, 92);
@@ -65,7 +84,8 @@ hr{
     text-align: center;
     text-decoration: none;
     font-size: 20px;
-    width: 12%;
+    width: 20%;
+    transform: translateX(200%);
 }
 
 .footer-copyright{

@@ -1,9 +1,9 @@
 // VARIABLES to set the scene
 //  defining all query selector
 var liveTimeValue = document.querySelector(".live-time-value");
-var displayScreen = document.querySelector(".screen-questions");
+var displayScreen = document.querySelector(".screen-display");
 var correctOrWrong = document.querySelector(".answer-statement");
-var highScores = document.querySelector(".high-scores");
+var highScoresButton = document.querySelector(".high-scores");
 
 // Question bank for quiz as "arrays"
 var questions =[{
@@ -89,7 +89,7 @@ function entryScreen () {
         displayScreen.appendChild(startScreenTitle);
 
     // entry screen instructions
-    var startScreenInstructions = document.createElement("p");
+    var startScreenInstructions = document.createElement("h3");
         startScreenInstructions.textContent = startScreen.startInstructions;
         startScreenInstructions.setAttribute("class", "startInstructions");
         displayScreen.appendChild(startScreenInstructions);
@@ -110,7 +110,7 @@ function entryScreen () {
 
 // This feature will be used from transitioning to next page or next section (question in our case)
 function clearScreen() {
-        displayScreen.innerHTML = "";
+    displayScreen.innerHTML = "";
 } 
 
 // QUESTION SCREEN
@@ -121,21 +121,21 @@ var questionNumber = 0;
 var score = 0;
 var penaltyWrongAnswer = 10;
 
-
 // variable for displaying the users if their answer is correct or wrong
 var correctWrongMessage = {
-    correctMessage = "Congratulations! Your answer in CORRECT",
-    wrongMessage = "Your answer in Wrong",
-    displayTime: 1500,
+    correctMessage: "Congratulations! Your answer in CORRECT",
+    wrongMessage: "Your answer in WRONG",
+    displayTime: 1000
 }
 
-var timeOverMessage = setTimeout(function() {
+function timeOverMessage () {
+var messageDisplayTimeOver = setTimeout(function() {
     correctOrWrong.textContent = "";
     }, correctWrongMessage.displayTime);
 }
 
 // Frame for "question screen"
-function startCodeQuiz(event) {
+function startCodeQuiz() {
     questionNumber = 0;
     score = 0;
     clearScreen();
@@ -172,7 +172,6 @@ function endTimer(){
     displayTimeisOverScreen();
 }
 
-
 // variable for displaying "out of time" when user do not compelte all question in allocated time
 var timeOver = {
     timeOverheading: "The quiz is terminated because you run out of time",
@@ -200,14 +199,14 @@ function questionStyle(){
     displayScreen.appendChild(questionUl);
             
     //question list element
-    for (var i = 0; i < questions[questionNumber].option.length; i++){
+    for (var i = 0; i < questions[questionNumber].options.length; i++){
     var questionLi = document.createElement("li");
     questionLi.setAttribute("class", "questionLi");
     questionUl.appendChild(questionLi);
 
     // allocating button key to answers options
     var answerOptionsButton = document.createElement("button");
-    answerOptionsButton.textContent = questions[questionNumber].option[i];
+    answerOptionsButton.textContent = questions[questionNumber].options[i];
     answerOptionsButton.setAttribute("class", "answerOptionsButton");
     questionLi.appendChild(answerOptionsButton);
 
@@ -269,37 +268,37 @@ var quizComplete = {
 }
 
 // function for displaying score and addeding initials 
-function displayAllAnswered(){
+function displayAllAnswered() {
     // All answered heading
     var allAnsweredHeading = document.createElement("h1");
     allAnsweredHeading.textContent = quizComplete.completionHeading;
-    allAnsweredHeading.setAttribute("class"; "allAnsweredHeading");
+    allAnsweredHeading.setAttribute("class", "allAnsweredHeading");
     displayScreen.appendChild(allAnsweredHeading);
 
     // All answered message
     var allAnsweredMessage = document.createElement("h2");
     allAnsweredMessage.textContent = `${quizComplete.completionMessage} ${score}`;
-    allAnsweredHeading.setAttribute("class"; "allAnsweredMessage");
+    allAnsweredHeading.setAttribute("class", "allAnsweredMessage");
     displayScreen.appendChild(allAnsweredMessage);
 
     // User input label
     var allAnsweredLabel = document.createElement("label");
     allAnsweredLabel.textContent = quizComplete.completionLabel;
-    allAnsweredLabel.setAttribute("class"; "allAnsweredLabel");
+    allAnsweredLabel.setAttribute("class", "allAnsweredLabel");
     allDoneLabel.setAttribute("for", "allAnsweredInput");
     displayScreen.appendChild(allAnsweredLabel);
 
     // User input
     var allAnsweredInput = document.createElement("input");
-    allAnsweredInput.setAttribute("class"; "allAnsweredInput");
-    allAnsweredInput.setAttribute("type"; "check");
-    allAnsweredInput.setAttribute("id"; "allAnsweredInput");
+    allAnsweredInput.setAttribute("class", "allAnsweredInput");
+    allAnsweredInput.setAttribute("type", "check");
+    allAnsweredInput.setAttribute("id", "allAnsweredInput");
     displayScreen.appendChild(allAnsweredInput);
 
     // submit button
     var allAnsweredButton = document.createElement("button");
     allAnsweredButton.textContent = quizComplete.completionButton;
-    allAnsweredButton.setAttribute("class"; "allAnsweredButton");
+    allAnsweredButton.setAttribute("class", "allAnsweredButton");
     displayScreen.appendChild(allAnsweredButton);
 
     // event listerner on button click
@@ -315,7 +314,7 @@ var saveUserInput = {
 var saveDatabase = [];
 
 // function to extract a user score and save them to localStorage 
-funtion submitScores() {
+function submitScores() {
     
     //this will load scores from local storage to user database
     loadUserScores()
@@ -358,5 +357,7 @@ function goBack(){
     entryScreen();
 }
 
+// open entry screen
+entryScreen();
 
 // Reference website: https://www.freecodecamp.org/news/multiple-choice-quiz-template/
