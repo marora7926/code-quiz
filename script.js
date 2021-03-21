@@ -1,9 +1,9 @@
 // VARIABLES to set the scene
 //  defining all query selector
 var liveTimeValue = document.querySelector(".live-time-value");
-var displayScreen = document.querySelector(".screen");
-var correctOrWrong = document.querySelector(".answer");
-var highScores = document.querySelector(".High-scores");
+var displayScreen = document.querySelector(".screen-questions");
+var correctOrWrong = document.querySelector(".answer-statement");
+var highScores = document.querySelector(".high-scores");
 
 // Question bank for quiz as "arrays"
 var questions =[{
@@ -74,9 +74,9 @@ var questions =[{
 
 //variable for setting the screen that users will see when they launch the quiz 
 var startScreen = {
-    startTitle: "Coding Quiz Challenge",
+    startTitle: "Coding-Quiz-Challenge",
     startInstructions: "Instructions: Try to answer the following code related questions within the time limit. Keep in mind that every incorrect answers will penalize your scoretime by 10 seconds. Press START key to start the quiz. Good luck!",
-    startKey: "Start"
+    startKey: "Start",
 }
 
 // variable for displaying the users if their answer is correct or wrong
@@ -87,7 +87,7 @@ var answerDisplay = {
 
 // variable for displaying "out of time" when user do not compelte all question in allocated time
 var timeOver = {
-    timeOverheading: "The quiz is terminated because you run out of time"
+    timeOverheading: "The quiz is terminated because you run out of time",
 }
 
 // variables for displaying the user for input additional information when the quiz is complete
@@ -95,51 +95,36 @@ var quizComplete = {
     completionHeading: "Congratulation! You have completed the quiz",
     completionMessage: "Your scored :",
     completionLabel: "Please enter your initials: ",
-    completionButton: "Submit to archive"
-}
-
-// variable for saving users details as entered above
-var savedDetails = {
-    userScore: 0,
-    userInitials: ""
-}
-
-// variable to display saved user-entered detials and their scores to the highscores buttton
-var highScores = {
-    highScoresheader: "High Scores",
-    highScoresInitials: "Initials",
-    highScoresHeading: "Scores",
-    highScoresGoBackButton: "Start Screen",
-    highScoresClearButton: "Clear High Scores"
+    completionButton: "Submit to save your results",
 }
 
 // FUNCTIONS to make the website interactive
 // ENTRY SCREEN - function and variables what user will see on the "entry screen"
 function entryScreen () {
-        // entry screen title 
-        var startScreenTitle = document.createElement("h1");
-            startScreenTitle.textContent = startScreen.startTitle;
-            startScreenTitle.setAttribute("class", "startTitle");
-            displayScreen.appendChild(startScreenTitle);
+    // entry screen title 
+    var startScreenTitle = document.createElement("h1");
+        startScreenTitle.textContent = startScreen.startTitle;
+        startScreenTitle.setAttribute("class", "startTitle");
+        displayScreen.appendChild(startScreenTitle);
 
-        // entry screen instructions
-        var startScreenInstructions = document.createElement("p");
-            startScreenInstructions.textContent = startScreen.startInstructions;
-            startScreenInstructions.setAttribute("class", "startInstructions");
-            displayScreen.appendChild(startScreenInstructions);
+    // entry screen instructions
+    var startScreenInstructions = document.createElement("p");
+        startScreenInstructions.textContent = startScreen.startInstructions;
+        startScreenInstructions.setAttribute("class", "startInstructions");
+        displayScreen.appendChild(startScreenInstructions);
 
-        // entry screen start button
-        var startScreenButton = document.createElement("button");
-            startScreenButton.textContent = startScreen.startkey;
-            startScreenButton.setAttribute("class", "startkey");
-            displayScreen.appendChild(startScreenButton);
+    // entry screen start button
+    var startScreenButton = document.createElement("button");
+        startScreenButton.textContent = startScreen.startkey;
+        startScreenButton.setAttribute("class", "startkey");
+        displayScreen.appendChild(startScreenButton);
 
-        // defining the time on the live timer on the entry screen
-        var totalSeconds = 50
-        liveTimeValue.textContent = totalSeconds;
+    // defining the time on the live timer on the entry screen
+    var totalSeconds = 50
+    liveTimeValue.textContent = totalSeconds;
 
-        // eventListner to start the even, in this case, start the quiz on the entry screen
-        startScreenButton.addEventListener("click", startCodeQuiz);
+    // eventListner to start the even, in this case, start the quiz on the entry screen
+    startScreenButton.addEventListener("click", startCodeQuiz);
 }
 
 // This feature will be used from transitioning to next page or next section (question in our case)
@@ -182,11 +167,35 @@ function startLiveTimer(){
 interval = setInterval
     (function() {
     secondsLeft++;
-    updateTimerDisplay();
+    updateTimer();
     if (secondsLeft > totalSeconds) {
-        finishTimer();
+        endTimer();
         }
     }, 1000);
+}
+
+// this function is calculating the score with baseline value as "0" 
+function updateTimer(){
+if (secondsLeft > totalSeconds){
+    liveTimeValue.textContent = 0;
+} else {
+    liveTimeValue.textContent = totalSeconds - secondsLeft;
+    }
+}
+
+// this function will display the finish screen when time is over 
+function endTimer(){
+    stopTheTimer();
+    clearScreen();
+    displayTimeisOverScreen();
+}
+
+// this function is for displaying "out of time"
+function displayTimeIsOverScreen() {
+    var timeIsOverHeading = document.createElement("h1");
+        timeIsOverHeading.textContent = timeOver.timeOverHeading;
+        timeIsOverHeading.setAttribute("class", "timeisOveHeading");
+        displayScreen.appendChild(timeIsOverHeading);
 }
         
 // style of the question to be displayed on the "question screen"
@@ -301,7 +310,6 @@ function displayAllAnswered(){
 }
 
 // after submit the score, this will save the score to local storage
-
 var saveUserInput = {
     userScore: 0,
     userInitials: ""
@@ -336,5 +344,22 @@ function loadUserScores() {
         saveDatabase = [];
     }
 }
+
+// HIGH SCORES SCREEN
+// variable to display saved user-entered detials and their scores to the highscores buttton
+var highScores = {
+    highScoresheader: "High Scores",
+    highScoresInitials: "Initials",
+    highScoresHeading: "Scores",
+    highScoresGoBackButton: "Start Screen",
+    highScoresClearButton: "Clear High Scores"
+}
+
+// go back button function
+function goBack(){
+    clearScreen();
+    entryScreen();
+}
+
 
 // Reference website: https://www.freecodecamp.org/news/multiple-choice-quiz-template/
