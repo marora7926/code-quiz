@@ -114,10 +114,8 @@ var highScores = {
 }
 
 // FUNCTIONS to make the website interactive
-
-    // ENTRY SCREEN - function and variables what user will see on the "entry screen"
-        // Entry screen title
-    function entryScreen () {
+// ENTRY SCREEN - function and variables what user will see on the "entry screen"
+function entryScreen () {
         // entry screen title 
         var startScreenTitle = document.createElement("h1");
             startScreenTitle.textContent = startScreen.startTitle;
@@ -142,104 +140,167 @@ var highScores = {
 
         // eventListner to start the even, in this case, start the quiz on the entry screen
         startScreenButton.addEventListener("click", startCodeQuiz);
-    }
+}
 
-
-    // TRANSITION ENTRY TO QUESTION SCREEN - clear the content on the entry screen for the next screen i.e., questions for the quiz
-    function clearScreen() {
+// This feature will be used from transitioning to next page or next section (question in our case)
+function clearScreen() {
         displayScreen.innerHTML = "";
-    } 
+} 
 
-    // QUESTION SCREEN - function and variables what user will see (on the "question screen") after pressing the start key on the "entry screen"
-    function startCodeQuiz() {
-        // live timer to start at the launch of the quiz on the "question screen"
-        var interval;
-        var secondsLeft = 0;
+// QUESTION SCREEN
+// function and variables what user will see (on the "question screen") after pressing the start key on the "entry screen"
+var interval;
+var secondsLeft = 0;
+var questionNumber = 0;
+var score = 0;
+var penaltyWrongAnswer = 10;
 
-        function startLiveTimer(){
-            interval = setInterval
-            (function() {
-                secondsLeft++;
-                updateTimerDisplay();
-            if (secondsLeft > totalSeconds) {
-                finishTimer();
-                }
-            }, 1000);
+// variable for displaying the correct or wrong message 
+var correctWrongMessage = {
+    correctMessage = "Congratulations! Your answer in CORRECT",
+    wrongMessage = "Your answer in Wrong",
+    displayTime: 1500,
+}
+
+var timeOverMessage = setTimeout(function() {
+    correctOrWrong.textContent = "";
+    }, correctWrongMessage.displayTime);
+}
+
+// Frame for "question screen"
+function startCodeQuiz(event) {
+    questionNumber = 0;
+    score = 0;
+    clearScreen();
+    startLiveTimer();
+    questionStyle();        
+}
+    
+//defining fucntions for each frame for StartCodeQuiz  
+// live timer to start at the launch of the quiz on the "question screen"
+function startLiveTimer(){
+interval = setInterval
+    (function() {
+    secondsLeft++;
+    updateTimerDisplay();
+    if (secondsLeft > totalSeconds) {
+        finishTimer();
         }
+    }, 1000);
+}
         
-        // setting question numner at the start of the quiz on the "question screen"  
-        var questionNumber = 0;
-        // style of the question to be displayed on the "question screen"
-        function questionStyle(){
-            // display question statement and its format on the "question screen"
-            var questionStatement = document.createElement("p");
-            questionStatement.textContent = questions[questionNumber].question;
-            questionStatement.setAttribute("class", "question");
-            displayScreen.appendChild(questionStatement);
+// style of the question to be displayed on the "question screen"
+function questionStyle(){
+    // display question statement and its format on the "question screen"
+    var questionStatement = document.createElement("p");
+    questionStatement.textContent = questions[questionNumber].question;
+    questionStatement.setAttribute("class", "question");
+    displayScreen.appendChild(questionStatement);
 
-            // display answer choice (unordered list element) on the "question screen" for each question
-            var questionUl = document.createElement("ul");
-            questionUl.setAttribute("class", "questionUl");
-            displayScreen.appendChild(questionUl);
+    // display answer choice (unordered list element) on the "question screen" for each question
+    var questionUl = document.createElement("ul");
+    questionUl.setAttribute("class", "questionUl");
+    displayScreen.appendChild(questionUl);
             
-            //question list element
-            for (var i = 0; i < questions[questionNumber].option.length; i++){
-            var questionLi = document.createElement("li");
-            questionLi.setAttribute("class", "questionLi");
-            questionUl.appendChild(questionLi);
+    //question list element
+    for (var i = 0; i < questions[questionNumber].option.length; i++){
+    var questionLi = document.createElement("li");
+    questionLi.setAttribute("class", "questionLi");
+    questionUl.appendChild(questionLi);
 
-            // allocating button key to answers options
-            var answerOptionsButton = document.createElement("button");
-            answerOptionsButton.textContent = questions[questionNumber].option[i];
-            answerOptionsButton.setAttribute("class", "answerOptionsButton");
-            questionLi.appendChild(answerOptionsButton);
+    // allocating button key to answers options
+    var answerOptionsButton = document.createElement("button");
+    answerOptionsButton.textContent = questions[questionNumber].option[i];
+    answerOptionsButton.setAttribute("class", "answerOptionsButton");
+    questionLi.appendChild(answerOptionsButton);
 
-            //checking the answer on the "question screen"
-            answerOptionsButton.addEventListener("click", validateAnswer);
-            }
-        }
-        
-        // validating (correct or wrong) the user input on the "question screen"
-        // variable for displaying the correct or wrong message 
-        var correctWrongMessage = {
-            correctMessage = "Congratulations! Your answer in CORRECT",
-            wrongMessage = "Your answer in Wrong",
-            displayTime: 1500,
-        }
-
-        // score variable for baseline score
-        var score = 0;
-        var penaltyWrongAnswer = 10;
-        
-        function validateAnswer(event) {
-                // when an answer option is clicked - two components, as below:
-            // a) for correct answer 
-            if (event.target.textContent == questions[questionNumber].answer){
-            // b) for wrong answer 
-                correctOrWrong.textContent = correctWrongMessage.correctMessage
-                score++;
-            } else {
-                correctOrWrong.textContent = correctWrongMessage.wrongMessage
-                secondsLeft += penaltyWrongAnswer;
-            }
-
-        
-        }
-        
-        // display each question on one "question screen"
-        function clearScreen();
-        if (questionNumber === questions.length - 1) {
-            // will be defined subsequently
-            stopTimer();
-            // display allDone screen (this will be defined subsequently)
-            displayAllDone();
-        } else {
-            // move to next question
-            questionNumber++;
-            // displays the next question on the "question screen"
-            questionStyle();
-        }
+    //checking the answer on the "question screen"
+    answerOptionsButton.addEventListener("click", validateAnswer);
     }
+}
+        
+// validating (correct or wrong) the user input on the "question screen"
+function validateAnswer(event) {
+    // when an answer option is clicked, it will have one of the two components, as follow:
+    // a) for correct answer 
+    if (event.target.textContent == questions[questionNumber].answer){
+    correctOrWrong.textContent = correctWrongMessage.correctMessage
+    score++;
+    // b) for wrong answer
+    } else {
+    correctOrWrong.textContent = correctWrongMessage.wrongMessage
+    secondsLeft += penaltyWrongAnswer;
+    }
+            
+    // display each question on one "question screen" and clear the creen form next question 
+    clearScreen();
+
+    // clean the question and answer section when the time is over
+    timeOverMessage();
+                                    
+    // when the user is at the last question 
+    if (questionNumber === questions.length - 1) {
+    
+    // stop the time, defined subsequently
+    stopTheTimer();
+    
+    // display all answered screen, defined subsequently
+    displayAllAnswered();
+    } else {
+    
+    // move to next question
+    questionNumber++;
+                    
+    // displays the next question on the "question screen"
+    questionStyle();
+    }
+}
+
+// Stop the time function, to be used at a few instances
+function stopTheTimer(){
+    clearInterval(interval);
+    secondsLeft = 0;
+}
+
+function displayAllAnswered(){
+
+    // All answered heading
+    var allAnsweredHeading = document.createElement("h1");
+    allAnsweredHeading.textContent = quizComplete.completionHeading;
+    allAnsweredHeading.setAttribute("class"; "allAnsweredHeading");
+    displayScreen.appendChild(allAnsweredHeading);
+
+    // All answered message
+    var allAnsweredMessage = document.createElement("h2");
+    allAnsweredMessage.textContent = `${quizComplete.completionMessage} ${score}`;
+    allAnsweredHeading.setAttribute("class"; "allAnsweredMessage");
+    displayScreen.appendChild(allAnsweredMessage);
+
+    // User input label
+    var allAnsweredLabel = document.createElement("label");
+    allAnsweredLabel.textContent = quizComplete.allAnsweredLabel;
+    allAnsweredLabel.setAttribute("class"; "allAnsweredLabel");
+    allDoneLabel.setAttribute("for", "allAnsweredInput");
+    displayScreen.appendChild(allAnsweredLabel);
+
+    // User input
+    var allAnsweredInput = document.createElement("input");
+    allAnsweredInput.setAttribute("class"; "allAnsweredInput");
+    allAnsweredInput.setAttribute("type"; "check");
+    allAnsweredInput.setAttribute("id"; "allAnsweredInput");
+    displayScreen.appendChild(allAnsweredInput);
+
+    // submit button
+    var allAnsweredButton = document.createElement("button");
+    allAnsweredButton.textContent = quizComplete.allAnsweredButton;
+    allAnsweredButton.setAttribute("class"; "allAnsweredButton");
+    displayScreen.appendChild(allAnsweredButton);
+
+    // event listerner on button click
+    allAnsweredButton.addEventListener("click", submitScore);
+}
+
+
 
     
 
