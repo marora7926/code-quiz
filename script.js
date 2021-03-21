@@ -76,8 +76,8 @@ var questions =[{
 //variable for setting the screen that users will see when they launch the quiz 
 var startScreen = {
     startTitle: "Coding-Quiz-Challenge",
-    startInstructions: "Instructions: Try to answer the following code related questions within the time limit. Keep in mind that every incorrect answers will penalize your scoretime by 10 seconds. Press START key to start the quiz. Good luck!",
-    startKey: "Start",
+    startInstructions: "Instructions: Try to answer the following code related questions within the time limit. Keep in mind that every incorrect answers will penalize your score time by 10 seconds. Press START key to start the quiz. Good luck!",
+    startKey: "Start"
 }
 
 // ENTRY SCREEN - function and variables what user will see on the "entry screen"
@@ -96,12 +96,12 @@ function entryScreen () {
 
     // entry screen start button
     var startScreenButton = document.createElement("button");
-        startScreenButton.textContent = startScreen.startkey;
-        startScreenButton.setAttribute("class", "startkey");
+        startScreenButton.textContent = startScreen.startKey;
+        startScreenButton.setAttribute("class", "startKey");
         displayScreen.appendChild(startScreenButton);
 
     // defining the time on the live timer on the entry screen
-    var totalSeconds = 50
+    var totalSeconds = 60
     liveTimeValue.textContent = totalSeconds;
 
     // eventListner to start the even, in this case, start the quiz on the entry screen

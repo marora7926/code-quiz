@@ -45,11 +45,11 @@ hr{
     background-color:coral;
 }
 
-.startkey{
+.startKey{
     background-color: rgb(98, 206, 98);
     border-radius: 15px;
     color: black;
-    padding: 20px 15px;
+    padding: 10px 15px;
     margin-top: 10px;
     margin-bottom: 10px;
     text-align: center;
