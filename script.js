@@ -72,6 +72,7 @@ var questions =[{
     }
 ]
 
+// FUNCTIONS to make the website interactive
 //variable for setting the screen that users will see when they launch the quiz 
 var startScreen = {
     startTitle: "Coding-Quiz-Challenge",
@@ -79,26 +80,6 @@ var startScreen = {
     startKey: "Start",
 }
 
-// variable for displaying the users if their answer is correct or wrong
-var answerDisplay = {
-    correctAnswer: "Correct!",
-    wrongAnswer: "Wrong!",
-}
-
-// variable for displaying "out of time" when user do not compelte all question in allocated time
-var timeOver = {
-    timeOverheading: "The quiz is terminated because you run out of time",
-}
-
-// variables for displaying the user for input additional information when the quiz is complete
-var quizComplete = {
-    completionHeading: "Congratulation! You have completed the quiz",
-    completionMessage: "Your scored :",
-    completionLabel: "Please enter your initials: ",
-    completionButton: "Submit to save your results",
-}
-
-// FUNCTIONS to make the website interactive
 // ENTRY SCREEN - function and variables what user will see on the "entry screen"
 function entryScreen () {
     // entry screen title 
@@ -140,7 +121,8 @@ var questionNumber = 0;
 var score = 0;
 var penaltyWrongAnswer = 10;
 
-// variable for displaying the correct or wrong message 
+
+// variable for displaying the users if their answer is correct or wrong
 var correctWrongMessage = {
     correctMessage = "Congratulations! Your answer in CORRECT",
     wrongMessage = "Your answer in Wrong",
@@ -188,6 +170,12 @@ function endTimer(){
     stopTheTimer();
     clearScreen();
     displayTimeisOverScreen();
+}
+
+
+// variable for displaying "out of time" when user do not compelte all question in allocated time
+var timeOver = {
+    timeOverheading: "The quiz is terminated because you run out of time",
 }
 
 // this function is for displaying "out of time"
@@ -271,8 +259,17 @@ function stopTheTimer(){
     secondsLeft = 0;
 }
 
-function displayAllAnswered(){
 
+// variables for displaying the user for input additional information when the quiz is complete
+var quizComplete = {
+    completionHeading: "Congratulation! You have completed the quiz",
+    completionMessage: "Your scored :",
+    completionLabel: "Please enter your initials: ",
+    completionButton: "Submit to save your results",
+}
+
+// function for displaying score and addeding initials 
+function displayAllAnswered(){
     // All answered heading
     var allAnsweredHeading = document.createElement("h1");
     allAnsweredHeading.textContent = quizComplete.completionHeading;
@@ -287,7 +284,7 @@ function displayAllAnswered(){
 
     // User input label
     var allAnsweredLabel = document.createElement("label");
-    allAnsweredLabel.textContent = quizComplete.allAnsweredLabel;
+    allAnsweredLabel.textContent = quizComplete.completionLabel;
     allAnsweredLabel.setAttribute("class"; "allAnsweredLabel");
     allDoneLabel.setAttribute("for", "allAnsweredInput");
     displayScreen.appendChild(allAnsweredLabel);
@@ -301,7 +298,7 @@ function displayAllAnswered(){
 
     // submit button
     var allAnsweredButton = document.createElement("button");
-    allAnsweredButton.textContent = quizComplete.allAnsweredButton;
+    allAnsweredButton.textContent = quizComplete.completionButton;
     allAnsweredButton.setAttribute("class"; "allAnsweredButton");
     displayScreen.appendChild(allAnsweredButton);
 
