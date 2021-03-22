@@ -62,7 +62,7 @@ hr{
     font-size: 25px;
 }
 
-.questionUl {
+.answerOptionsUl {
     list-style-type: disc;
 }
 
@@ -73,6 +73,10 @@ hr{
     margin-bottom: 5px;
     width: 30%;
     text-align: left;
+}
+
+.answer-statement {
+    font-size: 25px;
 }
 
 .high-scores{

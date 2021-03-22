@@ -101,38 +101,41 @@ function entryScreen () {
         displayScreen.appendChild(startScreenButton);
 
     // defining the time on the live timer on the entry screen
-    var totalSeconds = 60
-    liveTimeValue.textContent = totalSeconds;
+    var secondsLeft = 60
+    liveTimeValue.textContent = secondsLeft;
 
     // eventListner to start the even, in this case, start the quiz on the entry screen
     startScreenButton.addEventListener("click", startCodeQuiz);
 }
 
-// This feature will be used from transitioning to next page or next section (question in our case)
+// This function will be used from transitioning to next page or next section (question in our case)
 function clearScreen() {
     displayScreen.innerHTML = "";
 } 
 
 // QUESTION SCREEN
 // function and variables what user will see (on the "question screen") after pressing the start key on the "entry screen"
-var interval;
-var secondsLeft = 0;
 var questionNumber = 0;
 var score = 0;
 var penaltyWrongAnswer = 10;
 
 // variable for displaying the users if their answer is correct or wrong
 var correctWrongMessage = {
-    correctMessage: "Congratulations! Your answer in CORRECT",
-    wrongMessage: "Your answer in WRONG",
+    correctMessage: "Congratulations! Your answer is CORRECT.",
+    wrongMessage: "Your answer is WRONG.",
     displayTime: 1000
 }
 
-function timeOverMessage () {
-var messageDisplayTimeOver = setTimeout(function() {
-    correctOrWrong.textContent = "";
-    }, correctWrongMessage.displayTime);
+// variable for displaying "out of time" when user do not compelte all question in allocated time
+var timeOver = {
+    timeOverHeading: "The quiz is terminated because you run out of time",
 }
+
+// function timeOverMessage () {
+// var messageDisplayTimeOver = setTimeout(function() {
+//     correctOrWrong.textContent = "";
+//     }, correctWrongMessage.displayTime);
+// }
 
 // Frame for "question screen"
 function startCodeQuiz() {
@@ -146,42 +149,44 @@ function startCodeQuiz() {
 //defining fucntions for each frame for StartCodeQuiz  
 // live timer to start at the launch of the quiz on the "question screen"
 function startLiveTimer(){
-interval = setInterval
-    (function() {
-    secondsLeft++;
-    updateTimer();
-    if (secondsLeft > totalSeconds) {
-        endTimer();
+    var timeInterval = setInterval(function() {
+        secondsLeft--;
+        if(secondsLeft === 0){
+        clearInterval(timeInterval);
+        clearScreen();
+        displayTimeIsOverScreen();
         }
     }, 1000);
 }
 
+
 // this function is calculating the score with baseline value as "0" 
-function updateTimer(){
-if (secondsLeft > totalSeconds){
-    liveTimeValue.textContent = 0;
-} else {
-    liveTimeValue.textContent = totalSeconds - secondsLeft;
-    }
-}
+// function updateTimer(){
+//     if (secondsLeft > totalSeconds){
+//         liveTimeValue.textContent = 0;
+//     } else {
+//         liveTimeValue.textContent = totalSeconds - secondsLeft;
+//     }
+// }
 
 // this function will display the finish screen when time is over 
-function endTimer(){
-    stopTheTimer();
-    clearScreen();
-    displayTimeisOverScreen();
-}
+// function endTimer(){
+//     stopTheTimer();
+//     clearScreen();
+//     displayTimeIsOverScreen();
+// }
 
-// variable for displaying "out of time" when user do not compelte all question in allocated time
-var timeOver = {
-    timeOverheading: "The quiz is terminated because you run out of time",
-}
+// // Stop the time function, to be used at a few instances
+// function stopTheTimer() {
+//     clearInterval(interval);
+//     secondsLeft = 0;
+// }
 
 // this function is for displaying "out of time"
 function displayTimeIsOverScreen() {
     var timeIsOverHeading = document.createElement("h1");
         timeIsOverHeading.textContent = timeOver.timeOverHeading;
-        timeIsOverHeading.setAttribute("class", "timeisOveHeading");
+        timeIsOverHeading.setAttribute("class", "timeIsOverHeading");
         displayScreen.appendChild(timeIsOverHeading);
 }
         
@@ -194,21 +199,21 @@ function questionStyle(){
     displayScreen.appendChild(questionStatement);
 
     // display answer choice (unordered list element) on the "question screen" for each question
-    var questionUl = document.createElement("ul");
-    questionUl.setAttribute("class", "questionUl");
-    displayScreen.appendChild(questionUl);
+    var answerOptionsUl = document.createElement("ul");
+    answerOptionsUl.setAttribute("class", "answerOptionsUl");
+    displayScreen.appendChild(answerOptionsUl);
             
     //question list element
     for (var i = 0; i < questions[questionNumber].options.length; i++){
-    var questionLi = document.createElement("li");
-    questionLi.setAttribute("class", "questionLi");
-    questionUl.appendChild(questionLi);
+        var answerOptionsLi = document.createElement("li");
+        answerOptionsLi.setAttribute("class", "answerOptionsLi");
+        answerOptionsUl.appendChild(answerOptionsLi);
 
     // allocating button key to answers options
     var answerOptionsButton = document.createElement("button");
     answerOptionsButton.textContent = questions[questionNumber].options[i];
     answerOptionsButton.setAttribute("class", "answerOptionsButton");
-    questionLi.appendChild(answerOptionsButton);
+    answerOptionsLi.appendChild(answerOptionsButton);
 
     //checking the answer on the "question screen"
     answerOptionsButton.addEventListener("click", validateAnswer);
@@ -224,40 +229,29 @@ function validateAnswer(event) {
     score++;
     // b) for wrong answer
     } else {
-    correctOrWrong.textContent = correctWrongMessage.wrongMessage
-    secondsLeft += penaltyWrongAnswer;
+    correctOrWrong.textContent = correctWrongMessage.wrongMessage;
+    secondsLeft - penaltyWrongAnswer;
     }
             
     // display each question on one "question screen" and clear the creen form next question 
     clearScreen();
-
     // clean the question and answer section when the time is over
     timeOverMessage();
-                                    
+
     // when the user is at the last question 
     if (questionNumber === questions.length - 1) {
-    
-    // stop the time, defined subsequently
-    stopTheTimer();
-    
-    // display all answered screen, defined subsequently
-    displayAllAnswered();
+        // stop the time
+        stopTheTimer();
+        // and display all answered screen
+        displayAllAnswered();
+        
     } else {
-    
-    // move to next question
-    questionNumber++;
-                    
-    // displays the next question on the "question screen"
-    questionStyle();
+        // move to next question
+        questionNumber++;         
+        // displays the next question on the "question screen"
+        questionStyle();
     }
 }
-
-// Stop the time function, to be used at a few instances
-function stopTheTimer(){
-    clearInterval(interval);
-    secondsLeft = 0;
-}
-
 
 // variables for displaying the user for input additional information when the quiz is complete
 var quizComplete = {
@@ -344,11 +338,32 @@ function loadUserScores() {
 // HIGH SCORES SCREEN
 // variable to display saved user-entered detials and their scores to the highscores buttton
 var highScores = {
-    highScoresheader: "High Scores",
-    highScoresInitials: "Initials",
-    highScoresHeading: "Scores",
-    highScoresGoBackButton: "Start Screen",
+    highScoresHeader: "High Scores",
+    scoresInitials: "Initials",
+    scoresHeading: "Scores",
+    highScoresGoBackButton: "Go to the Start Screen",
     highScoresClearButton: "Clear High Scores"
+}
+
+// Functionality and features of highscores page
+function viewHighScoresScreen(){
+    loadUserScores();
+    clearScreen();
+    highScoresStyle();
+}
+
+// style of the highscore page to be displayed on the "High Scores screen"
+function highScoresStyle(){
+    // display high score header on the "high scores screen"
+    var highScoresHeading = document.createElement("h1");
+        highScoresHeading.textContent = highScores.highScoresHeader;
+        highScoresHeading.setAttribute("class", "highScoresHeading");
+        displayScreen.appendChild(highScoresHeading);
+    
+    // create table of scores on the "high scores screen"
+    var highScoresTable = document.createElement("table");
+        highScoresTable.setAttribute("class", "highScoresTables");
+        highScoresTable.appendChild(highScoresHeading);
 }
 
 // go back button function
