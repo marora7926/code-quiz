@@ -83,7 +83,7 @@ var startScreen = {
 
 // ENTRY SCREEN - function and variables what user will see on the "entry screen"
 // Global scope variables that will be used on the "entry screen"
-var totalSeconds = 60;
+var totalSeconds = 50;
 
 function entryScreen () {
     // entry screen title 
@@ -281,7 +281,7 @@ function displayAllAnswered() {
 
     // All answered message
     var allAnsweredMessage = document.createElement("h2");
-        allAnsweredMessage.textContent = quizComplete.completionMessage + "score";
+        allAnsweredMessage.textContent = `${quizComplete.completionMessage} ${score}`;
         allAnsweredHeading.setAttribute("class", "allAnsweredMessage");
         displayScreen.appendChild(allAnsweredMessage);
 
@@ -294,9 +294,8 @@ function displayAllAnswered() {
 
     // User input
     var allAnsweredInput = document.createElement("input");
-        allAnsweredInput.setAttribute("class", "allAnsweredInput");
-        allAnsweredInput.setAttribute("type", "check");
         allAnsweredInput.setAttribute("id", "allAnsweredInput");
+        allAnsweredInput.setAttribute("type", "check");
         displayScreen.appendChild(allAnsweredInput);
 
     // submit button
@@ -340,7 +339,7 @@ function submitScores() {
 // save score and initials from localstorage to saveDatabase
 function loadUserScores() {
     if (localStorage.length !== 0) {
-        saveArray = JSON.parse(localStorage.getItem("saves"));
+        saveDatabase = JSON.parse(localStorage.getItem("saves"));
     } else {
         saveDatabase = [];
     }
@@ -351,14 +350,16 @@ function loadUserScores() {
 var highScores = {
     highScoresHeader: "High Scores",
     scoresInitials: "Initials",
-    scoresHeading: "Scores",
-    highScoresGoBackButton: "Go to the Start Screen",
-    highScoresClearButton: "Clear High Scores"
+    scoresHeading: "Score",
+    // highScoresGoBackButton: "Go to the Start Screen",
+    // highScoresClearButton: "Clear High Scores"
 }
 
 // Functionality and features of highscores page
 function viewHighScoresScreen(){
-    loadUserScores();
+    if (saveDatabase.length === 0){
+        loadUserScores();
+    }
     clearScreen();
     highScoresStyle();
 }
@@ -371,14 +372,32 @@ function highScoresStyle(){
         highScoresHeading.setAttribute("class", "highScoresHeading");
         displayScreen.appendChild(highScoresHeading);
     
-    // create table of scores on the "high scores screen"
-    var highScoresTable = document.createElement("table");
-        highScoresTable.setAttribute("class", "highScoresTables");
-        highScoresTable.appendChild(highScoresHeading);
+    // display initials on the "high scores screen"
+    var highScoresInitials = document.createElement("h3");
+        highScoresInitials.textContent = highScores.scoresInitials;
+        highScoresInitials.setAttribute("class", "highScoresInitials");
+        displayScreen.appendChild(highScoresInitials);
+
+    // display score on the "high scores screen"
+    var highScoresValue = document.createElement("h3");
+        highScoresValue.textContent = highScores.scoresHeading;
+        highScoresValue.setAttribute("class", "highScoresValue");
+        displayScreen.appendChild(highScoresValue);
+
+    for (var i = 0; i < saveDatabase.length; i++) {
+    // display initials on the "high scores screen"
+    var highScoresInitialsData = document.createElement("h3");
+        highScoresInitialsData.textContent = saveDatabase[i].userInitials;
+        displayScreen.appendChild(highScoresInitialsData);
+
+    // display score on the "high scores screen"
+    var highScoresValueData = document.createElement("h3");
+        highScoresValueData.textContent = saveDatabase[i].userScore;
+        displayScreen.appendChild(highScoresValueData);
+    }
 }
+
+highScoresButton.addEventListener("click", viewHighScoresScreen)
 
 // open entry screen
 entryScreen();
-
-// Reference website: https://www.freecodecamp.org/news/multiple-choice-quiz-template/
-
