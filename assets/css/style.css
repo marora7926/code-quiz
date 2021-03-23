@@ -79,6 +79,12 @@ hr{
     font-size: 25px;
 }
 
+
+.allAnsweredButton {
+    background-color: rgb(63, 200, 21);
+    font-size: 15px;
+}
+
 .high-scores{
     background-color: rgb(235, 185, 92);
     border-radius: 15px;

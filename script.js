@@ -119,7 +119,7 @@ function clearScreen() {
 // QUESTION SCREEN
 // Global scope variables that will be used on the "question screen"
 var questionNumber;
-var score;
+var score = 0;
 var timeInterval;
 var penaltyWrongAnswer = 10;
 var secondsLeft = 0;
@@ -136,7 +136,7 @@ var timeOver = {
 // variables for displaying the user for input additional information when the quiz is complete
 var quizComplete = {
     completionHeading: "Congratulation! You have completed the quiz",
-    completionMessage: "You scored :",
+    completionMessage: "Your score: ",
     completionLabel: "Please enter your initials: ",
     completionButton: "Submit to save your results",
 }
@@ -160,7 +160,7 @@ function startCodeQuiz() {
 // live timer to start at the launch of the quiz on the "question screen"
 function startLiveTimer(){
     timeInterval = setInterval(function() {
-    secondsLeft++;
+    totalSeconds--;
     updateTimer();
     if(secondsLeft > totalSeconds){
     endTimer();
@@ -178,7 +178,7 @@ function updateTimer(){
     }   
 }
 
-// this function will display the finish screen when time is over 
+// this function will display on the screen when time is over 
 function endTimer(){
     stopTheTimer();
     clearScreen();
@@ -238,7 +238,7 @@ function validateAnswer(event) {
     // when an answer option is clicked, it will have one of the two components, as follow:
     // a) for correct answer 
     if (event.target.textContent == questions[questionNumber].answer){
-    correctOrWrong.textContent = correctWrongMessage.correctMessage
+    correctOrWrong.textContent = correctWrongMessage.correctMessage;
     score++;
     // b) for wrong answer
     } else {
@@ -248,7 +248,7 @@ function validateAnswer(event) {
     
     // display each question on one "question screen" and clear the creen form next question 
     clearScreen();
-    // clean the question and answer section when the time is over
+    // clear the question and answer section when the time is over
     timeOverMessage();
 
     // when the user is at the last question 
@@ -268,7 +268,7 @@ function validateAnswer(event) {
 
 // function for time penalty
 function penaltyTime () {
-    totalSeconds - penaltyWrongAnswer;
+    secondsLeft += penaltyWrongAnswer;
 }
 
 // function for displaying score and addeding initials 
@@ -281,7 +281,7 @@ function displayAllAnswered() {
 
     // All answered message
     var allAnsweredMessage = document.createElement("h2");
-        allAnsweredMessage.textContent = `${quizComplete.completionMessage} ${score}`;
+        allAnsweredMessage.textContent = quizComplete.completionMessage + "score";
         allAnsweredHeading.setAttribute("class", "allAnsweredMessage");
         displayScreen.appendChild(allAnsweredMessage);
 
@@ -289,7 +289,7 @@ function displayAllAnswered() {
     var allAnsweredLabel = document.createElement("label");
         allAnsweredLabel.textContent = quizComplete.completionLabel;
         allAnsweredLabel.setAttribute("class", "allAnsweredLabel");
-        allDoneLabel.setAttribute("for", "allAnsweredInput");
+        allAnsweredLabel.setAttribute("for", "allAnsweredInput");
         displayScreen.appendChild(allAnsweredLabel);
 
     // User input
@@ -309,12 +309,11 @@ function displayAllAnswered() {
     allAnsweredButton.addEventListener("click", submitScores);
 }
 
-// after submit the score, this will save the score to local storage
+// global variables for scores and intial to database
 var saveUserInput = {
     userScore: 0,
     userInitials: ""
 }
-
 var saveDatabase = [];
 
 // function to extract a user score and save them to localStorage 
@@ -327,13 +326,15 @@ function submitScores() {
     saveUserInput.userScore = score;
     
     // add initial of a user to saveUserInput data variable
-    saveUserInput.userInitials = document.getElementById(allAnsweredInput).nodeValue;
+    saveUserInput.userInitials = document.getElementById("allAnsweredInput").value;
     
     //add subsequent score and intial to user database
     saveDatabase.push(saveUserInput);
 
     // save data from saveUserInput to local storage using JSON
     localStorage.setItem("saves", JSON.stringify(saveDatabase));
+
+    viewHighScoresScreen();
 }
 
 // save score and initials from localstorage to saveDatabase
@@ -374,12 +375,6 @@ function highScoresStyle(){
     var highScoresTable = document.createElement("table");
         highScoresTable.setAttribute("class", "highScoresTables");
         highScoresTable.appendChild(highScoresHeading);
-}
-
-// go back button function
-function goBack(){
-    clearScreen();
-    entryScreen();
 }
 
 // open entry screen
