@@ -5,6 +5,7 @@ var displayScreen = document.querySelector(".screen-display");
 var correctOrWrong = document.querySelector(".answer-statement");
 var highScoresButton = document.querySelector(".high-scores");
 
+
 // Question bank for quiz as "arrays"
 var questions =[{
     question: "What tag can be used to insert a line break or blank line in an HTML document?",
@@ -76,11 +77,14 @@ var questions =[{
 //variable for setting the screen that users will see when they launch the quiz 
 var startScreen = {
     startTitle: "Coding-Quiz-Challenge",
-    startInstructions: "Instructions: Try to answer the following code related questions within the time limit. Keep in mind that every incorrect answers will penalize your score time by 10 seconds. Press START key to start the quiz. Good luck!",
+    startInstructions: "Instructions: Try to answer the following code-related questions within the time limit. Keep in mind that every incorrect answers will penalize your score time by 10 seconds. Press START key to start the quiz. Good luck!",
     startKey: "Start"
 }
 
 // ENTRY SCREEN - function and variables what user will see on the "entry screen"
+// Global scope variables that will be used on the "entry screen"
+var totalSeconds = 60;
+
 function entryScreen () {
     // entry screen title 
     var startScreenTitle = document.createElement("h1");
@@ -101,8 +105,7 @@ function entryScreen () {
         displayScreen.appendChild(startScreenButton);
 
     // defining the time on the live timer on the entry screen
-    var secondsLeft = 60
-    liveTimeValue.textContent = secondsLeft;
+    liveTimeValue.textContent = totalSeconds;
 
     // eventListner to start the even, in this case, start the quiz on the entry screen
     startScreenButton.addEventListener("click", startCodeQuiz);
@@ -114,28 +117,35 @@ function clearScreen() {
 } 
 
 // QUESTION SCREEN
-// function and variables what user will see (on the "question screen") after pressing the start key on the "entry screen"
-var questionNumber = 0;
-var score = 0;
+// Global scope variables that will be used on the "question screen"
+var questionNumber;
+var score;
+var timeInterval;
 var penaltyWrongAnswer = 10;
-
+var secondsLeft = 0;
 // variable for displaying the users if their answer is correct or wrong
 var correctWrongMessage = {
     correctMessage: "Congratulations! Your answer is CORRECT.",
     wrongMessage: "Your answer is WRONG.",
     displayTime: 1000
 }
-
 // variable for displaying "out of time" when user do not compelte all question in allocated time
 var timeOver = {
     timeOverHeading: "The quiz is terminated because you run out of time",
 }
+// variables for displaying the user for input additional information when the quiz is complete
+var quizComplete = {
+    completionHeading: "Congratulation! You have completed the quiz",
+    completionMessage: "You scored :",
+    completionLabel: "Please enter your initials: ",
+    completionButton: "Submit to save your results",
+}
 
-// function timeOverMessage () {
-// var messageDisplayTimeOver = setTimeout(function() {
-//     correctOrWrong.textContent = "";
-//     }, correctWrongMessage.displayTime);
-// }
+function timeOverMessage () {
+var messageDisplayTimeOver = setTimeout(function() {
+    correctOrWrong.textContent = "";
+    }, correctWrongMessage.displayTime);
+}
 
 // Frame for "question screen"
 function startCodeQuiz() {
@@ -149,38 +159,41 @@ function startCodeQuiz() {
 //defining fucntions for each frame for StartCodeQuiz  
 // live timer to start at the launch of the quiz on the "question screen"
 function startLiveTimer(){
-    var timeInterval = setInterval(function() {
-        secondsLeft--;
-        if(secondsLeft === 0){
-        clearInterval(timeInterval);
-        clearScreen();
-        displayTimeIsOverScreen();
-        }
+    timeInterval = setInterval(function() {
+    secondsLeft++;
+    updateTimer();
+    if(secondsLeft > totalSeconds){
+    endTimer();
+    }
     }, 1000);
 }
 
-
-// this function is calculating the score with baseline value as "0" 
-// function updateTimer(){
-//     if (secondsLeft > totalSeconds){
-//         liveTimeValue.textContent = 0;
-//     } else {
-//         liveTimeValue.textContent = totalSeconds - secondsLeft;
-//     }
-// }
+// displayTimeIsOverScreen();
+// this function is for updating the time every second 
+function updateTimer(){
+    if (secondsLeft > totalSeconds){
+        liveTimeValue.textContent = 0;
+    } else {
+    liveTimeValue.textContent = totalSeconds - secondsLeft;
+    }   
+}
 
 // this function will display the finish screen when time is over 
-// function endTimer(){
-//     stopTheTimer();
-//     clearScreen();
-//     displayTimeIsOverScreen();
-// }
+function endTimer(){
+    stopTheTimer();
+    clearScreen();
+    displayTimeIsOverScreen();
+    var timeOverPost1s = setTimeout(function(){
+        clearScreen();
+        displayAllAnswered();
+    }, 1000);
+}
 
-// // Stop the time function, to be used at a few instances
-// function stopTheTimer() {
-//     clearInterval(interval);
-//     secondsLeft = 0;
-// }
+// Stop the time function 
+function stopTheTimer() {
+    clearInterval(timeInterval);
+    secondsLeft = 0;
+}
 
 // this function is for displaying "out of time"
 function displayTimeIsOverScreen() {
@@ -230,9 +243,9 @@ function validateAnswer(event) {
     // b) for wrong answer
     } else {
     correctOrWrong.textContent = correctWrongMessage.wrongMessage;
-    secondsLeft - penaltyWrongAnswer;
+    penaltyTime ();
     }
-            
+    
     // display each question on one "question screen" and clear the creen form next question 
     clearScreen();
     // clean the question and answer section when the time is over
@@ -253,47 +266,44 @@ function validateAnswer(event) {
     }
 }
 
-// variables for displaying the user for input additional information when the quiz is complete
-var quizComplete = {
-    completionHeading: "Congratulation! You have completed the quiz",
-    completionMessage: "Your scored :",
-    completionLabel: "Please enter your initials: ",
-    completionButton: "Submit to save your results",
+// function for time penalty
+function penaltyTime () {
+    totalSeconds - penaltyWrongAnswer;
 }
 
 // function for displaying score and addeding initials 
 function displayAllAnswered() {
     // All answered heading
     var allAnsweredHeading = document.createElement("h1");
-    allAnsweredHeading.textContent = quizComplete.completionHeading;
-    allAnsweredHeading.setAttribute("class", "allAnsweredHeading");
-    displayScreen.appendChild(allAnsweredHeading);
+        allAnsweredHeading.textContent = quizComplete.completionHeading;
+        allAnsweredHeading.setAttribute("class", "allAnsweredHeading");
+        displayScreen.appendChild(allAnsweredHeading);
 
     // All answered message
     var allAnsweredMessage = document.createElement("h2");
-    allAnsweredMessage.textContent = `${quizComplete.completionMessage} ${score}`;
-    allAnsweredHeading.setAttribute("class", "allAnsweredMessage");
-    displayScreen.appendChild(allAnsweredMessage);
+        allAnsweredMessage.textContent = `${quizComplete.completionMessage} ${score}`;
+        allAnsweredHeading.setAttribute("class", "allAnsweredMessage");
+        displayScreen.appendChild(allAnsweredMessage);
 
     // User input label
     var allAnsweredLabel = document.createElement("label");
-    allAnsweredLabel.textContent = quizComplete.completionLabel;
-    allAnsweredLabel.setAttribute("class", "allAnsweredLabel");
-    allDoneLabel.setAttribute("for", "allAnsweredInput");
-    displayScreen.appendChild(allAnsweredLabel);
+        allAnsweredLabel.textContent = quizComplete.completionLabel;
+        allAnsweredLabel.setAttribute("class", "allAnsweredLabel");
+        allDoneLabel.setAttribute("for", "allAnsweredInput");
+        displayScreen.appendChild(allAnsweredLabel);
 
     // User input
     var allAnsweredInput = document.createElement("input");
-    allAnsweredInput.setAttribute("class", "allAnsweredInput");
-    allAnsweredInput.setAttribute("type", "check");
-    allAnsweredInput.setAttribute("id", "allAnsweredInput");
-    displayScreen.appendChild(allAnsweredInput);
+        allAnsweredInput.setAttribute("class", "allAnsweredInput");
+        allAnsweredInput.setAttribute("type", "check");
+        allAnsweredInput.setAttribute("id", "allAnsweredInput");
+        displayScreen.appendChild(allAnsweredInput);
 
     // submit button
     var allAnsweredButton = document.createElement("button");
-    allAnsweredButton.textContent = quizComplete.completionButton;
-    allAnsweredButton.setAttribute("class", "allAnsweredButton");
-    displayScreen.appendChild(allAnsweredButton);
+        allAnsweredButton.textContent = quizComplete.completionButton;
+        allAnsweredButton.setAttribute("class", "allAnsweredButton");
+        displayScreen.appendChild(allAnsweredButton);
 
     // event listerner on button click
     allAnsweredButton.addEventListener("click", submitScores);
@@ -376,3 +386,4 @@ function goBack(){
 entryScreen();
 
 // Reference website: https://www.freecodecamp.org/news/multiple-choice-quiz-template/
+
