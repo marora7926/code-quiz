@@ -77,7 +77,7 @@ var questions =[{
 var startScreen = {
     startTitle: "Coding-Quiz-Challenge",
     startInstructions: "Instructions: Answer the following code-related questions within the time limit.",
-    markingInstructions: "Keep in mind that every incorrect answers will penalize your score time by 10 seconds. Press START key to start the quiz. Good luck!",
+    markingInstructions: "Keep in mind that every incorrect answers will penalize your score time by 10 seconds. Your final score will be calculated as number of correct answers multiplied by time left. Press START key to start the quiz. Good luck!",
     startKey: "Start"
 }
 
@@ -131,8 +131,6 @@ var penaltyWrongAnswer = 10;
 var secondsLeft = 0;
 // variable for displaying the users if their answer is correct or wrong
 
-var calculatedScore = "allAnsweredScored" * "live-Time-Value";
-
 var correctWrongMessage = {
     correctMessage: "Congratulations! Your answer is CORRECT.",
     wrongMessage: "Your answer is WRONG.",
@@ -146,7 +144,7 @@ var timeOver = {
 var quizComplete = {
     completionHeading: "Congratulation! You have completed the quiz",
     completionMessageA: "You have ",
-    completionMessageB: " questions correct (out of 6).",
+    completionMessageB: " question/s correct (out of 6).",
     completionCalcScore: "Your calculated score is ",
     completionLabel: "Please enter your initials: ",
     completionButton: "Submit to save your results",
@@ -299,11 +297,10 @@ function displayAllAnswered() {
 
     // display and calculate score for leader borad
     var allAnsweredCalculatedScore = document.createElement("h2");
-        allAnsweredCalculatedScore.textContent = quizComplete.completionCalcScore + " " + calculatedScore + " points."; 
+        allAnsweredCalculatedScore.textContent = `${quizComplete.completionCalcScore} ${score * liveTimeValue.textContent} ${"points"}`; 
         allAnsweredCalculatedScore.setAttribute("class", "allAnsweredCalculatedScore");
         displayScreen.appendChild(allAnsweredCalculatedScore);
 
-    
     // User input label
     var allAnsweredLabel = document.createElement("label");
         allAnsweredLabel.textContent = quizComplete.completionLabel;
@@ -330,7 +327,7 @@ function displayAllAnswered() {
 
 // global variables for scores and intial to database
 var saveUserInput = {
-    userScore: 0,
+    userCalculatedScore: 0,
     userInitials: ""
 }
 
@@ -343,7 +340,7 @@ function submitScores() {
     loadUserScores()
     
     //add the score of a user to saveUserInput data variable 
-    saveUserInput.userScore = score;
+    saveUserInput.userCalculatedScore = score;
     
     // add initial of a user to saveUserInput data variable
     saveUserInput.userInitials = document.getElementById("allAnsweredInput").value;
@@ -371,7 +368,7 @@ function loadUserScores() {
 var highScores = {
     highScoresHeader: "High Scores",
     scoresInitials: "Initials",
-    scoresHeading: "Score",
+    CalculatedscoresHeading: "Leader Board Scores",
     clearScoresButton: "Clear High Scores",
     homePageButton: "Home Page"
 }
@@ -401,7 +398,7 @@ function highScoresStyle(){
 
     // display score on the "high scores screen"
     var highScoresValue = document.createElement("h3");
-        highScoresValue.textContent = highScores.scoresHeading;
+        highScoresValue.textContent = highScores.CalculatedscoresHeading;
         highScoresValue.setAttribute("class", "highScoresValue");
         displayScreen.appendChild(highScoresValue);
 
@@ -413,7 +410,7 @@ function highScoresStyle(){
 
     // display score on the "high scores screen"
     var highScoresValueData = document.createElement("h3");
-        highScoresValueData.textContent = saveDatabase[i].userScore;
+        highScoresValueData.textContent = saveDatabase[i].userCalculatedScore;
         displayScreen.appendChild(highScoresValueData);
     };
 
@@ -436,6 +433,7 @@ function allClear() {
     localStorage.clear();
     saveDatabase = [];
     saveUserInput.score = 0;
+
     saveUserInput.userInitials = "";
     clearScreen();
     entryScreen();
