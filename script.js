@@ -130,6 +130,9 @@ var timeInterval;
 var penaltyWrongAnswer = 10;
 var secondsLeft = 0;
 // variable for displaying the users if their answer is correct or wrong
+
+var leaderBoardScore = score * secondsLeft
+
 var correctWrongMessage = {
     correctMessage: "Congratulations! Your answer is CORRECT.",
     wrongMessage: "Your answer is WRONG.",
@@ -177,10 +180,10 @@ function startLiveTimer(){
 // displayTimeIsOverScreen();
 // this function is for updating the time every second 
 function updateTimer(){
-    if (secondsLeft > totalSeconds){
-        liveTimeValue.textContent = 0;
+    if (secondsLeft < totalSeconds){
+        liveTimeValue.textContent = totalSeconds - secondsLeft;    
     } else {
-    liveTimeValue.textContent = totalSeconds - secondsLeft;
+        liveTimeValue.textContent = 0;
     }   
 }
 
@@ -268,7 +271,7 @@ function validateAnswer(event) {
         // move to next question
         questionNumber++;         
         // displays the next question on the "question screen"
-        // questionStyle();
+        questionStyle();
     }
 }
 
@@ -287,7 +290,7 @@ function displayAllAnswered() {
 
     // All answered message
     var allAnsweredMessage = document.createElement("h2");
-        allAnsweredMessage.textContent = quizComplete.completionMessage + " " + score; //(Self learning: Alternate method is string interpolation i.e. `${quizComplete.completionMessage} ${score}`) 
+        allAnsweredMessage.textContent = quizComplete.completionMessage + " " + leaderBoardScore; //(Self learning: Alternate method is string interpolation i.e. `${quizComplete.completionMessage} ${score}`) 
         allAnsweredHeading.setAttribute("class", "allAnsweredMessage");
         displayScreen.appendChild(allAnsweredMessage);
 

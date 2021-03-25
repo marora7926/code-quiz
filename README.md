@@ -28,14 +28,21 @@ WHEN the game is over
 THEN I can save my initials and my score
 ```
 
-## Mock-Up
+## Insight Development
 
 The following sets of images demonstrates the overview of the web page and its structure:
 
-(./assets/images/Braching tree.png)
-(./assets/images/Start screen.png)
-(./assets/images/Highscores.png)
+## Branching Tree
 
+![Branching Tree](./assets/images/Branching_tree.jpg)
+
+## Start Screen
+
+![Start Screen](./assets/images/Start_screen.jpg)
+
+## Welcome Screen
+![Welcome Screen](./assets/images/Highscores.jpg)
+```
 ---
 
 © 2021 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.
