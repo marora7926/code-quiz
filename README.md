@@ -30,9 +30,11 @@ THEN I can save my initials and my score
 
 ## Mock-Up
 
-The following sets of images demonstrates the overview of the web page:
+The following sets of images demonstrates the overview of the web page and its structure:
 
-(./Assets/04-web-apis-homework-demo.gif)
+(./assets/images/Braching tree.png)
+(./assets/images/Start screen.png)
+(./assets/images/Highscores.png)
 
 ---
 

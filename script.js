@@ -268,7 +268,7 @@ function validateAnswer(event) {
         // move to next question
         questionNumber++;         
         // displays the next question on the "question screen"
-        questionStyle();
+        // questionStyle();
     }
 }
 
@@ -287,7 +287,7 @@ function displayAllAnswered() {
 
     // All answered message
     var allAnsweredMessage = document.createElement("h2");
-        allAnsweredMessage.textContent = quizComplete.completionMessage + " " + secondsLeft; //(Self learning: Alternate method is string interpolation i.e. `${quizComplete.completionMessage} ${score}`) 
+        allAnsweredMessage.textContent = quizComplete.completionMessage + " " + score; //(Self learning: Alternate method is string interpolation i.e. `${quizComplete.completionMessage} ${score}`) 
         allAnsweredHeading.setAttribute("class", "allAnsweredMessage");
         displayScreen.appendChild(allAnsweredMessage);
 
