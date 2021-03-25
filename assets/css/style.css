@@ -79,8 +79,8 @@ hr{
     text-align: left;
 }
 
-.answer-statement {
-    font-size: 25px;
+.allAnsweredLabel{
+    font-size: 20px;
 }
 
 .allAnsweredButton {

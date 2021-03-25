@@ -131,7 +131,7 @@ var penaltyWrongAnswer = 10;
 var secondsLeft = 0;
 // variable for displaying the users if their answer is correct or wrong
 
-var leaderBoardScore = score * secondsLeft
+var calculatedScore = "allAnsweredScored" * "live-Time-Value";
 
 var correctWrongMessage = {
     correctMessage: "Congratulations! Your answer is CORRECT.",
@@ -145,7 +145,9 @@ var timeOver = {
 // variables for displaying the user for input additional information when the quiz is complete
 var quizComplete = {
     completionHeading: "Congratulation! You have completed the quiz",
-    completionMessage: "Your score: ",
+    completionMessageA: "You have ",
+    completionMessageB: " questions correct (out of 6).",
+    completionCalcScore: "Your calculated score is ",
     completionLabel: "Please enter your initials: ",
     completionButton: "Submit to save your results",
 }
@@ -288,17 +290,26 @@ function displayAllAnswered() {
         allAnsweredHeading.setAttribute("class", "allAnsweredHeading");
         displayScreen.appendChild(allAnsweredHeading);
 
-    // All answered message
-    var allAnsweredMessage = document.createElement("h2");
-        allAnsweredMessage.textContent = quizComplete.completionMessage + " " + leaderBoardScore; //(Self learning: Alternate method is string interpolation i.e. `${quizComplete.completionMessage} ${score}`) 
-        allAnsweredHeading.setAttribute("class", "allAnsweredMessage");
-        displayScreen.appendChild(allAnsweredMessage);
+    // All answered score message
+    var allAnsweredScored = document.createElement("h2");
+        //(Note to self: Alternate method is string interpolation i.e. use this : `${quizComplete.completionMessageA} ${score} ${quizComplete.completionMessageB}`) 
+        allAnsweredScored.textContent = quizComplete.completionMessageA + score + quizComplete.completionMessageB; 
+        allAnsweredScored.setAttribute("class", "allAnsweredScored");
+        displayScreen.appendChild(allAnsweredScored);
 
+    // display and calculate score for leader borad
+    var allAnsweredCalculatedScore = document.createElement("h2");
+        allAnsweredCalculatedScore.textContent = quizComplete.completionCalcScore + " " + calculatedScore + " points."; 
+        allAnsweredCalculatedScore.setAttribute("class", "allAnsweredCalculatedScore");
+        displayScreen.appendChild(allAnsweredCalculatedScore);
+
+    
     // User input label
     var allAnsweredLabel = document.createElement("label");
         allAnsweredLabel.textContent = quizComplete.completionLabel;
         allAnsweredLabel.setAttribute("class", "allAnsweredLabel");
         allAnsweredLabel.setAttribute("for", "allAnsweredInput");
+        allAnsweredLabel.setAttribute("style", "font-size:25px !important;");
         displayScreen.appendChild(allAnsweredLabel);
 
     // User input
@@ -322,6 +333,7 @@ var saveUserInput = {
     userScore: 0,
     userInitials: ""
 }
+
 var saveDatabase = [];
 
 // function to extract a user score and save them to localStorage 
@@ -361,7 +373,7 @@ var highScores = {
     scoresInitials: "Initials",
     scoresHeading: "Score",
     clearScoresButton: "Clear High Scores",
-    homePageButton: "Go to Start Screen"
+    homePageButton: "Home Page"
 }
 
 // Functionality and features of highscores page
@@ -380,8 +392,8 @@ function highScoresStyle(){
         highScoresHeading.textContent = highScores.highScoresHeader;
         highScoresHeading.setAttribute("class", "highScoresHeading");
         displayScreen.appendChild(highScoresHeading);
-    
-    // display initials on the "high scores screen"
+
+    // display initials label to first blank column of the table
     var highScoresInitials = document.createElement("h3");
         highScoresInitials.textContent = highScores.scoresInitials;
         highScoresInitials.setAttribute("class", "highScoresInitials");
