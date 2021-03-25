@@ -5,7 +5,6 @@ var displayScreen = document.querySelector(".screen-display");
 var correctOrWrong = document.querySelector(".answer-statement");
 var highScoresButton = document.querySelector(".high-scores");
 
-
 // Question bank for quiz as "arrays"
 var questions =[{
     question: "What tag can be used to insert a line break or blank line in an HTML document?",
@@ -77,7 +76,8 @@ var questions =[{
 //variable for setting the screen that users will see when they launch the quiz 
 var startScreen = {
     startTitle: "Coding-Quiz-Challenge",
-    startInstructions: "Instructions: Try to answer the following code-related questions within the time limit. Keep in mind that every incorrect answers will penalize your score time by 10 seconds. Press START key to start the quiz. Good luck!",
+    startInstructions: "Instructions: Answer the following code-related questions within the time limit.",
+    markingInstructions: "Keep in mind that every incorrect answers will penalize your score time by 10 seconds. Press START key to start the quiz. Good luck!",
     startKey: "Start"
 }
 
@@ -97,6 +97,12 @@ function entryScreen () {
         startScreenInstructions.textContent = startScreen.startInstructions;
         startScreenInstructions.setAttribute("class", "startInstructions");
         displayScreen.appendChild(startScreenInstructions);
+
+         // entry screen instructions
+    var markingScreenInstructions = document.createElement("h3");
+        markingScreenInstructions.textContent = startScreen.markingInstructions;
+        markingScreenInstructions.setAttribute("class", "markingInstructions");
+        displayScreen.appendChild(markingScreenInstructions);
 
     // entry screen start button
     var startScreenButton = document.createElement("button");
@@ -281,7 +287,7 @@ function displayAllAnswered() {
 
     // All answered message
     var allAnsweredMessage = document.createElement("h2");
-        allAnsweredMessage.textContent = `${quizComplete.completionMessage} ${score}`;
+        allAnsweredMessage.textContent = quizComplete.completionMessage + " " + secondsLeft; //(Self learning: Alternate method is string interpolation i.e. `${quizComplete.completionMessage} ${score}`) 
         allAnsweredHeading.setAttribute("class", "allAnsweredMessage");
         displayScreen.appendChild(allAnsweredMessage);
 
@@ -351,8 +357,8 @@ var highScores = {
     highScoresHeader: "High Scores",
     scoresInitials: "Initials",
     scoresHeading: "Score",
-    // highScoresGoBackButton: "Go to the Start Screen",
-    // highScoresClearButton: "Clear High Scores"
+    clearScoresButton: "Clear High Scores",
+    homePageButton: "Go to Start Screen"
 }
 
 // Functionality and features of highscores page
@@ -394,7 +400,35 @@ function highScoresStyle(){
     var highScoresValueData = document.createElement("h3");
         highScoresValueData.textContent = saveDatabase[i].userScore;
         displayScreen.appendChild(highScoresValueData);
-    }
+    };
+
+    // Adding refresh button to clear the scores
+    var clearScoresDataBtn = document.createElement("button");
+        clearScoresDataBtn.textContent = highScores.clearScoresButton;
+        clearScoresDataBtn.setAttribute("class", "clearScoresDataBtn");
+        displayScreen.appendChild(clearScoresDataBtn);
+        clearScoresDataBtn.addEventListener("click", allClear);
+    
+    // adding the home page button
+    var goToHomePageBtn = document.createElement("button");
+        goToHomePageBtn.textContent = highScores.homePageButton;
+        goToHomePageBtn.setAttribute("class", "goToHomePageBtn");
+        displayScreen.appendChild(goToHomePageBtn);
+        goToHomePageBtn.addEventListener("click", homePage);
+}
+
+function allClear() {
+    localStorage.clear();
+    saveDatabase = [];
+    saveUserInput.score = 0;
+    saveUserInput.userInitials = "";
+    clearScreen();
+    entryScreen();
+}
+
+function homePage(){
+    clearScreen()
+    entryScreen()
 }
 
 highScoresButton.addEventListener("click", viewHighScoresScreen)
