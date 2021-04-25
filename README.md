@@ -28,9 +28,9 @@ WHEN the game is over
 THEN I can save my initials and my score
 ```
 ## Deployed Link
-```
+
 https://marora7926.github.io/code-quiz/
-```
+
 ## Insight Development
 
 The following sets of images demonstrates the overview of the web page and its structure:
