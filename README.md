@@ -27,18 +27,25 @@ THEN the game is over
 WHEN the game is over
 THEN I can save my initials and my score
 ```
-
+## Deployed Link
+```
+https://marora7926.github.io/code-quiz/
+```
 ## Insight Development
 
 The following sets of images demonstrates the overview of the web page and its structure:
 
 ## Branching Tree
 
+```
 ![Branching Tree](./assets/images/Branching_tree.jpg)
+```
 
 ## Start Screen
 
+```
 ![Start Screen](./assets/images/Start_screen.jpg)
+```
 
 ## Welcome Screen
 ![Welcome Screen](./assets/images/Highscores.jpg)
