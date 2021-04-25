@@ -1,6 +1,6 @@
 ## Code Quiz using Web APIs 
 
-## Your Task
+## Task
 
 This piece of work enhance my skills to build a timed coding quiz with multiple-choice questions. This app will run in the browser and will feature dynamically updated HTML and CSS powered by JavaScript code that are included. It has a clean, polished, and responsive user interface.
 
@@ -8,8 +8,8 @@ This piece of work enhance my skills to build a timed coding quiz with multiple-
 
 ```
 AS A coding boot camp student
-I WANT to take a timed quiz on JavaScript fundamentals that stores high scores
-SO THAT I can gauge my progress compared to my peers
+I WANT to take a timed quiz on HTML, CSS and JavaScript that stores high scores
+SO THAT I can gauge my progress compared to my peers.
 ```
 
 ## Acceptance Criteria
@@ -30,6 +30,11 @@ THEN I can save my initials and my score
 ## Deployed Link
 
 https://marora7926.github.io/code-quiz/
+
+## Technology used
+1. HTML
+2. CSS
+3. JavaScript
 
 ## Insight Development
 
@@ -52,4 +57,4 @@ The following sets of images demonstrates the overview of the web page and its s
 ```
 ---
 
-© 2021 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.
+© 2021 Mohit Arora. All Rights Reserved.
